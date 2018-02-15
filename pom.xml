@@ -57,6 +57,11 @@
             <version>LATEST</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots</artifactId>
+            <version>3.5</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -70,6 +75,8 @@
                     <target>${java.version}</target>
                     <compilerArgs>
                         <arg>-parameters</arg>
+                        <arg>--permit-illegal-access</arg>
+                        <arg>--add-modules=java.xml.ws.annotation</arg>
                         <arg>-J--add-opens</arg>
                         <arg>-Jjdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
                         <arg>-J--add-opens</arg>
