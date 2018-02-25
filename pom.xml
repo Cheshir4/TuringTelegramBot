@@ -17,10 +17,11 @@
     <dependencies>
         <dependency>
            <groupId>org.apache.logging.log4j</groupId>
-           <artifactId>log4j-core</artifactId>
+           <artifactId>log4j-slf4j-impl</artifactId>
            <version>LATEST</version>
            <optional>true</optional>
         </dependency>
+
         <dependency>
            <groupId>edu.washington.cs.types.checker</groupId>
            <artifactId>checker-framework</artifactId>
