@@ -11,8 +11,27 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+import java.io.InputStream;
+import java.util.Optional;
+import java.util.Properties;
+
 @Log4j2
 public class Bot extends TelegramLongPollingBot{
+
+    String name;
+    String token;
+
+    @SneakyThrows
+    public Bot() {
+        val properties = new Properties();
+        try (InputStream inputStream = Bot.class.getResourceAsStream("/settings.properties")) {
+            properties.load(inputStream);
+        }
+        name = Optional.ofNullable(properties.getProperty("name"))
+                .orElseThrow(() -> new RuntimeException(("Нет имени. Добавьте имя в файл settings.properties")));
+        token = Optional.ofNullable(properties.getProperty("token"))
+                .orElseThrow(() -> new RuntimeException(("Нет токена. Добавьте токен в файл settings.properties")));
+    }
 
     @SneakyThrows
     public static void main(String[] args) {
@@ -24,13 +43,13 @@ public class Bot extends TelegramLongPollingBot{
 
     @Override
     public String getBotUsername() {
-        return "Cheshir2Bot";
+        return name;
         //возвращаем юзера
     }
 
     @Override
     public String getBotToken() {
-        return "499534491:AAFGLiD1jAdEn0DKbod__9IVosYCqs2W-QM";
+        return token;
         //Токен бота
     }
 
