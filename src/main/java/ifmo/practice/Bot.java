@@ -21,6 +21,8 @@ public class Bot extends TelegramLongPollingBot{
     String name;
     String token;
 
+    static Chatbot homebot;
+
     @SneakyThrows
     public Bot() {
         val properties = new Properties();
@@ -31,6 +33,8 @@ public class Bot extends TelegramLongPollingBot{
                 .orElseThrow(() -> new RuntimeException(("Нет имени. Добавьте имя в файл settings.properties")));
         token = Optional.ofNullable(properties.getProperty("token"))
                 .orElseThrow(() -> new RuntimeException(("Нет токена. Добавьте токен в файл settings.properties")));
+
+        homebot = new Chatbot();
     }
 
     @SneakyThrows
@@ -58,9 +62,12 @@ public class Bot extends TelegramLongPollingBot{
     public void onUpdateReceived(Update e) {
         Message msg = e.getMessage();
         String txt = msg.getText();
-        if (txt.equals("/start")) {
-            sendMsg(msg, "Hello, " + getUsName(msg) + "! This is simple bot!");
+        sendMsg(msg, homebot.getAnswer(txt));
+
+        /*if (txt.equals("/start")) {
+            sendMsg(msg, "Hello, " + "! This is simple bot!");
         }
+        */
     }
 
 
@@ -73,14 +80,5 @@ public class Bot extends TelegramLongPollingBot{
             sendMessage(s);
     }
 
-    /**
-     * магия
-     * @param msg сообщение
-     * @return имя пользователя
-     */
-    private String getUsName(Message msg) {
-        return msg.getChat().getFirstName()
-                + (msg.getChat().getLastName()!= null ? " " + msg.getChat().getLastName() : "");
-    }
 }
 
