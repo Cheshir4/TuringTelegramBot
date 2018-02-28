@@ -63,11 +63,6 @@ public class Bot extends TelegramLongPollingBot{
         Message msg = e.getMessage();
         String txt = msg.getText();
         sendMsg(msg, homebot.getAnswer(txt));
-
-        /*if (txt.equals("/start")) {
-            sendMsg(msg, "Hello, " + "! This is simple bot!");
-        }
-        */
     }
 
 
